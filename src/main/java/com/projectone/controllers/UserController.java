@@ -1,6 +1,6 @@
 package com.projectone.controllers;
 
-import com.projectone.model.User;
+import com.projectone.model.UserModel;
 import com.projectone.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +22,8 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity getAllUsers() {
-    List<User> userList = userService.getAll();
-    return ResponseEntity.ok(userList);
+    List<UserModel> userModelList = userService.getAll();
+    return ResponseEntity.ok(userModelList);
   }
 
   @GetMapping("/{userId}")
