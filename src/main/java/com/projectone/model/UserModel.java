@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="users") // https://stackoverflow.com/questions/43191294/hibernate-error-executing-ddl-via-jdbc-statement
-public class User {
+// https://stackoverflow.com/questions/43191294/hibernate-error-executing-ddl-via-jdbc-statement
+public class UserModel {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long userId;

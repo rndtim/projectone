@@ -1,6 +1,6 @@
 package com.projectone.service;
 
-import com.projectone.model.User;
+import com.projectone.model.UserModel;
 import com.projectone.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ public class UserServiceImpl implements UserService {
     this.userRepository = userRepository;
   }
 
-  public List<User> getAll() {
+  public List<UserModel> getAll() {
     return userRepository.findAll();
   }
 
-  public User save(User user) {
-    return userRepository.save(user);
+  public UserModel save(UserModel userModel) {
+    return userRepository.save(userModel);
   }
 
   public void deleteUserById(Long userId) {
