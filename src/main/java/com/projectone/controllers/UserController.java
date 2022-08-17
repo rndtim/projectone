@@ -1,16 +1,11 @@
 package com.projectone.controllers;
 
-import com.projectone.model.UserModel;
+import com.projectone.entities.UserEntity;
 import com.projectone.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController()
+@RestController
 @RequestMapping("/users")
 public class UserController {
 
@@ -22,12 +17,22 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity getAllUsers() {
-    List<UserModel> userModelList = userService.getAll();
-    return ResponseEntity.ok(userModelList);
+    return ResponseEntity.ok(userService.getAll());
   }
 
   @GetMapping("/{userId}")
-  public Long getOneUserWithId(@PathVariable Long userId) {
-    return userId;
+  public ResponseEntity getOneUserWithId(@PathVariable Long userId) {
+    return ResponseEntity.ok(userService.getUserById(userId));
+  }
+
+  @PostMapping
+  public ResponseEntity addNewUser(@RequestBody UserEntity userEntity) {
+    return ResponseEntity.ok(userService.save(userEntity));
+  }
+
+  @DeleteMapping("/{userId}")
+  public ResponseEntity deleteUserById(@PathVariable Long userId) {
+    userService.deleteUserById(userId);
+    return ResponseEntity.ok("User has been deleted");
   }
 }
