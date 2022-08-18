@@ -1,19 +1,15 @@
-package com.projectone.model;
+package com.projectone.dto;
 
 import com.projectone.entities.PostEntity;
 import lombok.Data;
 
-import javax.persistence.Column;
-
 @Data
 public class Post {
   private Long id;
-
   private String title;
-
   private String description;
 
-  public static Post toModel(PostEntity postEntity) {
+  public static Post convertEntityToModel(PostEntity postEntity) {
     Post post = new Post();
     post.setId(postEntity.getId());
     post.setTitle(postEntity.getTitle());

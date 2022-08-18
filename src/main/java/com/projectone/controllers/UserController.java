@@ -1,9 +1,12 @@
 package com.projectone.controllers;
 
+import com.projectone.dto.User;
 import com.projectone.entities.UserEntity;
-import com.projectone.service.UserService;
+import com.projectone.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -16,18 +19,18 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity getAllUsers() {
-    return ResponseEntity.ok(userService.getAll());
+  public List<User> getAllUsers() {
+    return userService.getAllUsers();
   }
 
   @GetMapping("/{userId}")
-  public ResponseEntity getOneUserWithId(@PathVariable Long userId) {
-    return ResponseEntity.ok(userService.getUserById(userId));
+  public User getOneUserWithId(@PathVariable Long userId) {
+    return userService.getUserById(userId);
   }
 
   @PostMapping
-  public ResponseEntity addNewUser(@RequestBody UserEntity userEntity) {
-    return ResponseEntity.ok(userService.save(userEntity));
+  public User addNewUser(@RequestBody UserEntity userEntity) {
+    return userService.save(userEntity);
   }
 
   @DeleteMapping("/{userId}")

@@ -1,4 +1,4 @@
-package com.projectone.model;
+package com.projectone.dto;
 
 import com.projectone.entities.UserEntity;
 import lombok.Data;
@@ -13,12 +13,12 @@ public class User {
   private String email;
   private List<Post> posts;
 
-  public static User toModel(UserEntity userEntity) {
+  public static User convertEntityToModel(UserEntity userEntity) {
     User user = new User();
     user.setId(userEntity.getUserId());
     user.setName(userEntity.getName());
-    user.setEmail(user.getEmail());
-    user.setPosts(userEntity.getUserPosts().stream().map(Post::toModel).collect(Collectors.toList()));
+    user.setEmail(userEntity.getEmail());
+    user.setPosts(userEntity.getUserPosts().stream().map(Post::convertEntityToModel).collect(Collectors.toList()));
     return user;
   }
 }

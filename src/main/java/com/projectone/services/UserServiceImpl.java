@@ -1,11 +1,12 @@
-package com.projectone.service;
+package com.projectone.services;
 
 import com.projectone.entities.UserEntity;
-import com.projectone.model.User;
+import com.projectone.dto.User;
 import com.projectone.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,8 +16,8 @@ public class UserServiceImpl implements UserService {
     this.userRepository = userRepository;
   }
 
-  public List<UserEntity> getAll() {
-    return userRepository.findAll();
+  public List<User> getAllUsers() {
+    return userRepository.findAll().stream().map(User::convertEntityToModel).collect(Collectors.toList());
   }
 
   public User save(UserEntity userEntity) {
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("This email is being already used");
         throw new Exception();
       }
-      return User.toModel(userRepository.save(userEntity));
+      return User.convertEntityToModel(userRepository.save(userEntity));
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
   }
 
   public User getUserById(Long userId) {
-    return User.toModel(userRepository.getReferenceById(userId));
+    return User.convertEntityToModel(userRepository.getReferenceById(userId));
   }
 
   public void deleteUserById(Long userId) {
