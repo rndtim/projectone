@@ -1,17 +1,15 @@
 package com.projectone.controllers;
 
-import com.projectone.model.UserModel;
-import com.projectone.service.UserService;
+import com.projectone.dto.User;
+import com.projectone.entities.UserEntity;
+import com.projectone.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController()
-@RequestMapping("/users")
+@RestController
+@RequestMapping("api/users")
 public class UserController {
 
   private final UserService userService;
@@ -21,13 +19,23 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity getAllUsers() {
-    List<UserModel> userModelList = userService.getAll();
-    return ResponseEntity.ok(userModelList);
+  public List<User> getAllUsers() {
+    return userService.getAllUsers();
   }
 
   @GetMapping("/{userId}")
-  public Long getOneUserWithId(@PathVariable Long userId) {
-    return userId;
+  public User getOneUserWithId(@PathVariable Long userId) {
+    return userService.getUserById(userId);
+  }
+
+  @PostMapping
+  public User addNewUser(@RequestBody UserEntity userEntity) {
+    return userService.save(userEntity);
+  }
+
+  @DeleteMapping("/{userId}")
+  public ResponseEntity deleteUserById(@PathVariable Long userId) {
+    userService.deleteUserById(userId);
+    return ResponseEntity.ok("User has been deleted");
   }
 }
