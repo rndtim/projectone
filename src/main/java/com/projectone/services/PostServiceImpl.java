@@ -5,21 +5,17 @@ import com.projectone.entities.PostEntity;
 import com.projectone.entities.UserEntity;
 import com.projectone.repositories.PostRepository;
 import com.projectone.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
-
   private final UserRepository userRepository;
-
-  public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
-    this.postRepository = postRepository;
-    this.userRepository = userRepository;
-  }
 
   @Override
   public List<Post> getAllPostByUser(Long userId) {
