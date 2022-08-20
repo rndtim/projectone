@@ -24,15 +24,25 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Post save(PostEntity postEntity, Long userId) {
+  public Post save(Long userId, PostEntity postEntity) {
     UserEntity userEntity = userRepository.getReferenceById(userId);
     postEntity.setUserEntity(userEntity);
     return Post.convertEntityToModel(postRepository.save(postEntity));
   }
 
   @Override
+  public Post getPostByUserId(Long userId, Long postId) {
+    UserEntity userEntity = userRepository.getReferenceById(userId);
+    return userEntity.getUserPosts().stream()
+            .filter(post -> postId.equals(post.getId()))
+            .findAny()
+            .map(Post::convertEntityToModel).get();
+//    return Post.convertEntityToModel(postRepository.findPostById(postId));
+  }
+
+  @Override
   public Post getPostById(Long postId) {
-    return null;
+    return Post.convertEntityToModel(postRepository.findPostById(postId));
   }
 
   @Override

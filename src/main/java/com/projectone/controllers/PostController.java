@@ -22,9 +22,19 @@ public class PostController {
     return postService.getAllPostByUser(userId);
   }
 
+//  @GetMapping("/{userId}")
+//  public Post getOnePostByUserId(@PathVariable Long userId, @RequestParam Long postId) {
+//    return postService.getPostByUserId(userId, postId);
+//  }
+
+  @GetMapping("/{postId}")
+  public Post getOnePostById(@PathVariable Long postId) {
+    return postService.getPostById(postId);
+  }
+
   @PostMapping
-  public Post createPost(@RequestBody PostEntity postEntity, @RequestParam Long userId){
-    return postService.save(postEntity, userId);
+  public Post createPost(@RequestParam Long userId, @RequestBody PostEntity postEntity){
+    return postService.save(userId, postEntity);
   }
 
   @PutMapping("/{postId}")

@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface PostService {
   List<Post> getAllPostByUser(Long userId);
-  Post save(PostEntity postEntity, Long userId);
+  Post save(Long userId, PostEntity postEntity);
+  Post getPostByUserId(Long userId, Long postId);
   Post getPostById(Long postId);
   Post updatePost(Long postId);
   void deletePostById(Long postId);
