@@ -1,12 +1,13 @@
 <template>
   <div class="container mx-auto">
-    <posts-list/>
+    <add-post/>
   </div>
 </template>
+
 <script>
-import PostsList from "@/components/PostsList";
+import AddPost from "@/components/AddPost";
 
 export default {
-  components: {PostsList}
+  components: {AddPost}
 }
 </script>
