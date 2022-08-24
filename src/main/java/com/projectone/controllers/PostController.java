@@ -32,13 +32,23 @@ public class PostController {
     return postService.getPostById(postId);
   }
 
+//  @GetMapping("/{postId}")
+//  public Post getOnePostById(@PathVariable("postId") Post post) {
+//    return post;
+//  }
+
   @PostMapping
   public Post createPost(@RequestParam Long userId, @RequestBody PostEntity postEntity){
     return postService.save(userId, postEntity);
   }
 
   @PutMapping("/{postId}")
-  public Post updatePostById(@PathVariable Long postId){
-    return null;
+  public Post updatePostById(@PathVariable Long postId, @RequestBody PostEntity postEntity){
+    return postService.updatePost(postId, postEntity);
+  }
+
+  @DeleteMapping("/{postId}")
+  public void deletePostById(@PathVariable Long postId) {
+    postService.deletePostById(postId);
   }
 }

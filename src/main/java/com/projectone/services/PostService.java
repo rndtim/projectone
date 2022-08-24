@@ -10,6 +10,6 @@ public interface PostService {
   Post save(Long userId, PostEntity postEntity);
   Post getPostByUserId(Long userId, Long postId);
   Post getPostById(Long postId);
-  Post updatePost(Long postId);
+  Post updatePost(Long postId, PostEntity postEntity);
   void deletePostById(Long postId);
 }
