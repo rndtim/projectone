@@ -38,8 +38,6 @@ public class PostServiceImpl implements PostService {
 //    return Post.convertEntityToModel(postRepository.findPostById(postId));
   }
 
-
-
   @Override
   public Post getPostById(Long postId) {
     return Post.convertEntityToModel(postRepository.findPostById(postId));

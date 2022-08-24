@@ -1,11 +1,16 @@
 package com.projectone.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+//@Table(name = "posts")
 public class PostEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

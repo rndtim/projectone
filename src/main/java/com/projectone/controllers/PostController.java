@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/posts")
+@RequestMapping("/api")
 public class PostController {
 
   private final PostService postService;
@@ -17,7 +17,7 @@ public class PostController {
     this.postService = postService;
   }
 
-  @GetMapping
+  @GetMapping("/posts")
   public List<Post> getAllUserPosts(@RequestParam Long userId) {
     return postService.getAllPostByUser(userId);
   }
@@ -27,7 +27,7 @@ public class PostController {
 //    return postService.getPostByUserId(userId, postId);
 //  }
 
-  @GetMapping("/{postId}")
+  @GetMapping("/posts/{postId}")
   public Post getOnePostById(@PathVariable Long postId) {
     return postService.getPostById(postId);
   }
@@ -37,17 +37,17 @@ public class PostController {
 //    return post;
 //  }
 
-  @PostMapping
+  @PostMapping("/posts")
   public Post createPost(@RequestParam Long userId, @RequestBody PostEntity postEntity){
     return postService.save(userId, postEntity);
   }
 
-  @PutMapping("/{postId}")
+  @PutMapping("/posts/{postId}")
   public Post updatePostById(@PathVariable Long postId, @RequestBody PostEntity postEntity){
     return postService.updatePost(postId, postEntity);
   }
 
-  @DeleteMapping("/{postId}")
+  @DeleteMapping("/posts/{postId}")
   public void deletePostById(@PathVariable Long postId) {
     postService.deletePostById(postId);
   }
