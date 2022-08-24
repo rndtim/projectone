@@ -12,6 +12,10 @@ class PostService {
     createPost(data, userId) {
         return http.post(`api/posts?userId=${userId}`, data)
     }
+
+    deletePost(postId) {
+        return http.delete(`api/posts/${postId}`)
+    }
 }
 
 export default new PostService();
