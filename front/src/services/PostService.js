@@ -1,16 +1,20 @@
-import http from "axios";
+import http from "../http-common";
 
 class PostService {
-    getAllByUserId(userId) {
+    getAllPosts(userId) {
         return http.get(`api/posts?userId=${userId}`);
     }
 
-    get(postId) {
+    getOnePost(postId) {
         return http.get(`api/posts/${postId}`)
     }
 
-    createPost(data, userId) {
+    createPost(userId, data) {
         return http.post(`api/posts?userId=${userId}`, data)
+    }
+
+    editPost(postId, data) {
+        return http.put(`api/posts/${postId}`, data)
     }
 
     deletePost(postId) {
