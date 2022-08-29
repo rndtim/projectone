@@ -2,23 +2,23 @@ import http from "../http-common";
 
 class PostService {
     getAllPosts(userId) {
-        return http.get(`api/posts?userId=${userId}`);
+        return http.get(`/posts?userId=${userId}`);
     }
 
     getOnePost(postId) {
-        return http.get(`api/posts/${postId}`)
+        return http.get(`/posts/${postId}`)
     }
 
     createPost(userId, data) {
-        return http.post(`api/posts?userId=${userId}`, data)
+        return http.post(`/posts?userId=${userId}`, data)
     }
 
     editPost(postId, data) {
-        return http.put(`api/posts/${postId}`, data)
+        return http.put(`/posts/${postId}`, data)
     }
 
     deletePost(postId) {
-        return http.delete(`api/posts/${postId}`)
+        return http.delete(`/posts/${postId}`)
     }
 }
 

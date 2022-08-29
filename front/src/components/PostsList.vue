@@ -10,7 +10,7 @@
           </form>
         </div>
         <div class="row">
-          <ul class="list-group mt-3">
+          <ul class="list-group mt-3" v-if="posts != null">
             <li class="list-group-item d-flex justify-content-between align-items-center"
                 v-for="post in posts.sort((a,b) => a.id - b.id)"
                 :key="post.id"
@@ -22,17 +22,20 @@
                 {{ post.description }}
               </div>
               <div>
-                <router-link :to="'/' + post.id" class="btn btn-outline-warning me-3">Edit</router-link>
-                <button class="btn btn-danger" @click="deletePost(post.id)">Delete post</button>
+                <router-link :to="'/posts/' + post.id" class="btn btn-outline-warning me-3">Edit</router-link>
+                <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
               </div>
             </li>
           </ul>
-          <div class="mt-3 col-lg-4" v-if="postDeleted != null">
-            <p>{{ postDeleted }}</p>
+          <div class="mt-3 col-lg-4" v-else>
+            <p>You don't have posts</p>
+          </div>
+          <div class="mt-3 col-lg-4" v-if="messageDelete != null">
+            <p>{{ messageDelete }}</p>
           </div>
         </div>
         <div>
-          <router-link to="/add" class="btn btn-outline-primary mt-2">Add new post</router-link>
+          <router-link :to="{name:'add-post'}" class="btn btn-outline-primary mt-2">Add new post</router-link>
         </div>
       </div>
     </div>
@@ -45,7 +48,7 @@ import {ref} from "vue";
 
 // let userId = ref(null)
 let posts = ref([])
-let postDeleted = ref(null)
+let messageDelete = ref(null)
 
 const showAllPosts = () => {
   PostService.getAllPosts(4)
@@ -62,7 +65,7 @@ const deletePost = (postId) => {
   PostService.deletePost(postId)
       .then(() => {
         posts.value = posts.value.filter((post) => post.id !== postId)
-        postDeleted.value = 'Post was deleted'
+        messageDelete.value = 'Post was deleted'
       })
       .catch(error => console.log(error))
 }
