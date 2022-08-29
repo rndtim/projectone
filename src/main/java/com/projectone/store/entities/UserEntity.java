@@ -1,15 +1,14 @@
-package com.projectone.entities;
+package com.projectone.store.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,10 +18,10 @@ public class UserEntity implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long userId;
 
-  @Column(length = 50, nullable = false)
+  @Column(nullable = false)
   private String username;
 
-  @Column(length = 50, nullable = false)
+  @Column(nullable = false)
   private String email;
 
   @Column(length = 1000, nullable = false)

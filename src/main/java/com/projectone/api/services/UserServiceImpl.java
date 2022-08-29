@@ -1,11 +1,11 @@
-package com.projectone.services;
+package com.projectone.api.services;
 
-import com.projectone.dto.User;
-import com.projectone.entities.Roles;
-import com.projectone.entities.UserEntity;
-import com.projectone.exceptions.NoSuchUser;
-import com.projectone.exceptions.UserAlreadyExists;
-import com.projectone.repositories.UserRepository;
+import com.projectone.api.exceptions.NoSuchUser;
+import com.projectone.api.exceptions.UserAlreadyExists;
+import com.projectone.api.dto.User;
+import com.projectone.store.entities.Roles;
+import com.projectone.store.entities.UserEntity;
+import com.projectone.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

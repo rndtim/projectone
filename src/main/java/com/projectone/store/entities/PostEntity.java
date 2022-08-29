@@ -1,13 +1,12 @@
-package com.projectone.entities;
+package com.projectone.store.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +16,7 @@ public class PostEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(length=50, nullable=false)
+  @Column(nullable=false)
   private String title;
 
   @Column(nullable = false)

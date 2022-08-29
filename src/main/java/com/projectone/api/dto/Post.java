@@ -1,6 +1,6 @@
-package com.projectone.dto;
+package com.projectone.api.dto;
 
-import com.projectone.entities.PostEntity;
+import com.projectone.store.entities.PostEntity;
 import lombok.Data;
 
 @Data

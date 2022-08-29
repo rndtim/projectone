@@ -1,8 +1,8 @@
-package com.projectone.services;
+package com.projectone.api.services;
 
-import com.projectone.entities.UserEntity;
-import com.projectone.exceptions.NoSuchUser;
-import com.projectone.repositories.UserRepository;
+import com.projectone.api.exceptions.NoSuchUser;
+import com.projectone.store.entities.UserEntity;
+import com.projectone.store.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

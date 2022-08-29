@@ -1,7 +1,7 @@
-package com.projectone.services;
+package com.projectone.api.services;
 
-import com.projectone.entities.UserEntity;
-import com.projectone.dto.User;
+import com.projectone.api.dto.User;
+import com.projectone.store.entities.UserEntity;
 
 import java.util.List;
 

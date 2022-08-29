@@ -1,4 +1,4 @@
-package com.projectone.entities;
+package com.projectone.store.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,7 +1,7 @@
-package com.projectone.services;
+package com.projectone.api.services;
 
-import com.projectone.dto.Post;
-import com.projectone.entities.PostEntity;
+import com.projectone.api.dto.Post;
+import com.projectone.store.entities.PostEntity;
 
 import java.security.Principal;
 import java.util.List;

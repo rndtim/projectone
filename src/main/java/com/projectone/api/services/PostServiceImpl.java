@@ -1,10 +1,10 @@
-package com.projectone.services;
+package com.projectone.api.services;
 
-import com.projectone.dto.Post;
-import com.projectone.entities.PostEntity;
-import com.projectone.entities.UserEntity;
-import com.projectone.repositories.PostRepository;
-import com.projectone.repositories.UserRepository;
+import com.projectone.api.dto.Post;
+import com.projectone.store.entities.PostEntity;
+import com.projectone.store.entities.UserEntity;
+import com.projectone.store.repositories.PostRepository;
+import com.projectone.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

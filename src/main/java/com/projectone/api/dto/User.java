@@ -1,6 +1,6 @@
-package com.projectone.dto;
+package com.projectone.api.dto;
 
-import com.projectone.entities.UserEntity;
+import com.projectone.store.entities.UserEntity;
 import lombok.Data;
 
 import java.util.List;

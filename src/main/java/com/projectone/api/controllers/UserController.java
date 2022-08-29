@@ -1,8 +1,8 @@
-package com.projectone.controllers;
+package com.projectone.api.controllers;
 
-import com.projectone.dto.User;
-import com.projectone.entities.UserEntity;
-import com.projectone.services.UserService;
+import com.projectone.api.dto.User;
+import com.projectone.api.services.UserService;
+import com.projectone.store.entities.UserEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

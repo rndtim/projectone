@@ -1,8 +1,8 @@
-package com.projectone.controllers;
+package com.projectone.api.controllers;
 
-import com.projectone.dto.Post;
-import com.projectone.entities.PostEntity;
-import com.projectone.services.PostService;
+import com.projectone.api.dto.Post;
+import com.projectone.api.services.PostService;
+import com.projectone.store.entities.PostEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
