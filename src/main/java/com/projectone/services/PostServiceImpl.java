@@ -8,6 +8,7 @@ import com.projectone.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,9 +45,9 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Post save(Long userId, PostEntity postEntity) {
-    UserEntity userEntity = userRepository.getReferenceById(userId);
-    postEntity.setUserEntity(userEntity);
+  public Post save(Principal principal, PostEntity postEntity) {
+    UserEntity userEntity = userRepository.findUserByEmail(principal.getName());
+    postEntity.setAuthor(userEntity);
     return Post.convertEntityToModel(postRepository.save(postEntity));
   }
 

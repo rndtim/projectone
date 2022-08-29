@@ -16,7 +16,7 @@ public class User {
   public static User convertEntityToModel(UserEntity userEntity) {
     User user = new User();
     user.setId(userEntity.getUserId());
-    user.setName(userEntity.getName());
+    user.setName(userEntity.getUsername());
     user.setEmail(userEntity.getEmail());
     user.setPosts(userEntity.getUserPosts().stream().map(Post::convertEntityToModel).collect(Collectors.toList()));
     return user;

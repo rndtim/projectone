@@ -10,4 +10,5 @@ public interface UserService {
   User save(UserEntity userEntity);
   User getUserById(Long userId);
   void deleteUserById(Long userId);
+//  User findByUsername(String username);
 }

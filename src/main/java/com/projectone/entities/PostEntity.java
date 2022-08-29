@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "posts")
+@Table(name = "posts")
 public class PostEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +23,14 @@ public class PostEntity {
   @Column(nullable = false)
   private String description;
 
-  @ManyToOne
+  private LocalDateTime createdAt;
+
+  @ManyToOne(cascade = CascadeType.REFRESH)
   @JoinColumn(name = "user_id")
-  private UserEntity userEntity;
+  private UserEntity author;
+
+  @PrePersist
+  private void init() {
+    createdAt = LocalDateTime.now();
+  }
 }

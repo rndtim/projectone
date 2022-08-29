@@ -5,6 +5,7 @@ import com.projectone.entities.PostEntity;
 import com.projectone.services.PostService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -32,14 +33,9 @@ public class PostController {
     return postService.getPostById(postId);
   }
 
-//  @GetMapping("/{postId}")
-//  public Post getOnePostById(@PathVariable("postId") Post post) {
-//    return post;
-//  }
-
   @PostMapping("/posts")
-  public Post createPost(@RequestParam Long userId, @RequestBody PostEntity postEntity){
-    return postService.save(userId, postEntity);
+  public Post createPost(Principal principal, @RequestBody PostEntity postEntity){
+    return postService.save(principal, postEntity);
   }
 
   @PutMapping("/posts/{postId}")
