@@ -3,10 +3,10 @@ package com.projectone.api.controllers;
 import com.projectone.api.dto.User;
 import com.projectone.api.services.UserService;
 import com.projectone.store.entities.UserEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("api/")
 public class UserController {
 
   private final UserService userService;

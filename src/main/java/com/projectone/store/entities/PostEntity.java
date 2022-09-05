@@ -22,7 +22,10 @@ public class PostEntity {
   @Column(nullable = false)
   private String description;
 
+  @Column(name = "created_at")
   private LocalDateTime createdAt;
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
 
   @ManyToOne(cascade = CascadeType.REFRESH)
   @JoinColumn(name = "user_id")
@@ -32,4 +35,5 @@ public class PostEntity {
   private void init() {
     createdAt = LocalDateTime.now();
   }
+
 }

@@ -6,7 +6,7 @@ import com.projectone.api.dto.User;
 import com.projectone.store.entities.Roles;
 import com.projectone.store.entities.UserEntity;
 import com.projectone.store.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
@@ -23,13 +23,12 @@ public class UserServiceImpl implements UserService {
     return userRepository.findAll().stream().map(User::convertEntityToModel).collect(Collectors.toList());
   }
 
-  public User findByUsername(String username) {
-    return User.convertEntityToModel(userRepository.findByUsername(username));
-  }
-
   public User save(UserEntity userEntity) {
     try {
-      if (userRepository.findUserByEmail(userEntity.getEmail()) != null) {
+      if (userRepository.findByUsername(userEntity.getUsername()) != null) {
+        throw new UserAlreadyExists("This username is being already used");
+      }
+      if (userRepository.findByEmail(userEntity.getEmail()) != null) {
         throw new UserAlreadyExists("This email is being already used");
       }
       userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
@@ -42,10 +41,10 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  public User getUserById(Long userId) {
+  public User getUserByUsername(String username) {
     try {
-      if (!userRepository.existsById(userId)) throw new NoSuchUser("No user with this id");
-      return User.convertEntityToModel(userRepository.getReferenceById(userId));
+      if (userRepository.findByUsername(username) == null) throw new NoSuchUser("No user with this username");
+      return User.convertEntityToModel(userRepository.findByUsername(username));
     } catch (NoSuchUser e) {
       throw new RuntimeException(e);
     }

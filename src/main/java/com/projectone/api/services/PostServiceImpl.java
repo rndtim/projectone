@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Post save(Principal principal, PostEntity postEntity) {
-    UserEntity userEntity = userRepository.findUserByEmail(principal.getName());
+    UserEntity userEntity = userRepository.findByEmail(principal.getName());
     postEntity.setAuthor(userEntity);
     return Post.convertEntityToModel(postRepository.save(postEntity));
   }
