@@ -34,8 +34,8 @@ public class PostController {
   }
 
   @PostMapping("/posts")
-  public Post createPost(Principal principal, @RequestBody PostEntity postEntity){
-    return postService.save(principal, postEntity);
+  public Post createPost(@RequestBody PostEntity postEntity){
+    return postService.save(postEntity);
   }
 
   @PutMapping("/posts/{postId}")

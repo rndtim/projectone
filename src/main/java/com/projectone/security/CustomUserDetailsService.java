@@ -1,4 +1,4 @@
-package com.projectone.api.services;
+package com.projectone.security;
 
 import com.projectone.api.exceptions.NoSuchUser;
 import com.projectone.store.entities.UserEntity;

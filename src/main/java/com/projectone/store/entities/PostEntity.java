@@ -34,6 +34,7 @@ public class PostEntity {
   @PrePersist
   private void init() {
     createdAt = LocalDateTime.now();
+    updatedAt = LocalDateTime.now();
   }
 
 }

@@ -6,9 +6,10 @@ import com.projectone.store.entities.UserEntity;
 import com.projectone.store.repositories.PostRepository;
 import com.projectone.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,8 +46,9 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Post save(Principal principal, PostEntity postEntity) {
-    UserEntity userEntity = userRepository.findByUsername(principal.getName());
+  public Post save(PostEntity postEntity) {
+    String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    UserEntity userEntity = userRepository.findByUsername(username);
     postEntity.setAuthor(userEntity);
     return Post.convertEntityToModel(postRepository.save(postEntity));
   }
@@ -56,6 +58,7 @@ public class PostServiceImpl implements PostService {
     PostEntity newPost = postRepository.findPostById(postId);
     newPost.setTitle(postEntity.getTitle());
     newPost.setDescription(postEntity.getDescription());
+    newPost.setUpdatedAt(LocalDateTime.now());
     return Post.convertEntityToModel(postRepository.save(newPost));
   }
 
