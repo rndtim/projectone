@@ -16,12 +16,12 @@ import java.util.*;
 public class UserEntity implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
+  private Long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String username;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String email;
 
   @Column(length = 1000, nullable = false)
@@ -41,11 +41,6 @@ public class UserEntity implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return getRoles();
-  }
-
-  @Override
-  public String getUsername() {
-    return getEmail();
   }
 
   @Override

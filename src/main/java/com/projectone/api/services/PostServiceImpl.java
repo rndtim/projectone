@@ -33,8 +33,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Post getPostByUserId(Long userId, Long postId) {
-    UserEntity userEntity = userRepository.getReferenceById(userId);
+  public Post getPostByUsername(String username, Long postId) {
+    UserEntity userEntity = userRepository.findByUsername(username);
     return getPostFromUser(postId, userEntity);
 //    return Post.convertEntityToModel(postRepository.findPostById(postId));
   }
@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Post save(Principal principal, PostEntity postEntity) {
-    UserEntity userEntity = userRepository.findUserByEmail(principal.getName());
+    UserEntity userEntity = userRepository.findByUsername(principal.getName());
     postEntity.setAuthor(userEntity);
     return Post.convertEntityToModel(postRepository.save(postEntity));
   }

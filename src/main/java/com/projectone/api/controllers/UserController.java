@@ -2,28 +2,23 @@ package com.projectone.api.controllers;
 
 import com.projectone.api.dto.User;
 import com.projectone.api.services.UserService;
-import com.projectone.store.entities.UserEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("api/users")
+@AllArgsConstructor
 public class UserController {
 
-  private final UserService userService;
+  private UserService userService;
 
-  public UserController(UserService userService) {
-    this.userService = userService;
+  @GetMapping("/home")
+  public User getUserInfo() {
+    String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    return userService.getByUsername(username);
   }
-
-  @GetMapping("users/registration")
-  public String registration() {
-    System.out.println("GetMapping to users/registration");
-    return "registration";
-  }
-
-  @PostMapping("users/registration")
-  public @ResponseBody User addNewUser(UserEntity userEntity) {
-    return userService.save(userEntity);
-  }
-
 }
