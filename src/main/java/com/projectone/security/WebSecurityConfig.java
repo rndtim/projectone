@@ -1,6 +1,5 @@
 package com.projectone.security;
 
-import com.projectone.api.services.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,22 +30,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
             .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/", "/api/auth/registration", "/api/auth/login").permitAll()
-            .antMatchers("/api/users/**").hasRole("USER")
-            .anyRequest().authenticated()
-            .and()
             .exceptionHandling()
             .authenticationEntryPoint(
                     (request, response, authException) ->
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized")
             )
+            .and()
+            .authorizeRequests()
+            .antMatchers("/", "/api/auth/registration", "/api/auth/login").permitAll()
+            .antMatchers("/api/users/**", "/api/posts/**").hasRole("USER")
+            .anyRequest().authenticated()
             .and()
               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-              .logout().permitAll();
-
-    http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+              .logout().permitAll()
+            .and()
+              .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
   }
 

@@ -2,7 +2,7 @@ package com.projectone.api.controllers;
 
 import com.projectone.api.dto.LoginCredentials;
 import com.projectone.api.dto.User;
-import com.projectone.api.services.CustomUserDetailsService;
+import com.projectone.security.CustomUserDetailsService;
 import com.projectone.api.services.UserService;
 import com.projectone.security.JWTUtil;
 import com.projectone.store.entities.UserEntity;
@@ -46,6 +46,7 @@ public class AuthenticationController {
       String token = jwtUtil.generateToken(user);
 
       return Collections.singletonMap("jwt-token", token);
+
     }catch (AuthenticationException authExc){
       throw new RuntimeException("Invalid Login Credentials");
     }
