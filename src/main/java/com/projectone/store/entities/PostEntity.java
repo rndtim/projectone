@@ -35,4 +35,5 @@ public class PostEntity {
   private void init() {
     createdAt = LocalDateTime.now();
   }
+
 }
