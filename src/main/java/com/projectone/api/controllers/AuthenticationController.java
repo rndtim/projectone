@@ -2,7 +2,6 @@ package com.projectone.api.controllers;
 
 import com.projectone.api.dto.LoginCredentials;
 import com.projectone.api.dto.User;
-import com.projectone.security.CustomUserDetailsService;
 import com.projectone.api.services.UserService;
 import com.projectone.security.JWTUtil;
 import com.projectone.store.entities.UserEntity;
@@ -26,13 +25,12 @@ public class AuthenticationController {
   private JWTUtil jwtUtil;
   private UserService userService;
   private AuthenticationManager authManager;
-  private CustomUserDetailsService userDetailsService;
 
   @PostMapping("/registration")
   public Map<String, Object> registerHandler(@RequestBody UserEntity user){
     userService.save(user);
     String token = jwtUtil.generateToken(User.convertEntityToModel(user));
-    return Collections.singletonMap("jwt-token", token);
+    return Collections.singletonMap("token", token);
   }
 
   @PostMapping("/login")
@@ -45,7 +43,7 @@ public class AuthenticationController {
       User user = userService.getByUsername(body.getUsername());
       String token = jwtUtil.generateToken(user);
 
-      return Collections.singletonMap("jwt-token", token);
+      return Collections.singletonMap("token", token);
 
     }catch (AuthenticationException authExc){
       throw new RuntimeException("Invalid Login Credentials");
