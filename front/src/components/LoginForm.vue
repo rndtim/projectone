@@ -4,11 +4,11 @@
       <form @submit.prevent="login">
         <h1 class="h3 mb-3 fw-normal">Login</h1>
 
-        <input v-model="data.name" class="form-control" placeholder="Name" required>
+        <input v-model="credentials.username" class="form-control" placeholder="Username" required>
 
-        <input v-model="data.password" type="password" class="form-control" placeholder="Password" required>
+        <input v-model="credentials.password" type="password" class="form-control" placeholder="Password" required>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
       </form>
     </div>
   </div>
@@ -17,14 +17,25 @@
 <script setup>
 
 import {ref} from "vue";
+import {useRouter} from "vue-router";
+import AuthService from "@/services/AuthService";
 
-let data = ref({
-  name: '',
+const router = useRouter();
+let credentials = ref({
+  username: '',
   password: ''
 })
 
 const login = () => {
-  console.log(data.value)
+  console.log('login')
+  console.log(credentials.value)
+  AuthService.login(credentials.value)
+      .then(response => {
+        localStorage.setItem('jwt', response.data.token)
+      })
+      .catch(error => console.error(error))
+
+  router.push({name: 'posts'})
 }
 </script>
 

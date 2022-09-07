@@ -21,21 +21,21 @@
               <div>
                 {{ post.description }}
               </div>
-              <div>
+              <div v-if="!auth">
                 <router-link :to="'/posts/' + post.id" class="btn btn-outline-warning me-3">Edit</router-link>
                 <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
               </div>
             </li>
           </ul>
-          <div class="mt-3 col-lg-4" v-else>
-            <p>You don't have posts</p>
-          </div>
+<!--          <div class="mt-3 col-lg-4" v-else>-->
+<!--            <p>No posts</p>-->
+<!--          </div>-->
           <div class="mt-3 col-lg-4" v-if="messageDelete != null">
             <p>{{ messageDelete }}</p>
           </div>
         </div>
         <div>
-          <router-link :to="{name:'add-post'}" class="btn btn-outline-primary mt-2">Add new post</router-link>
+          <router-link :to="{name:'add-post'}" class="btn btn-outline-primary mt-2" v-if="auth">Add new post</router-link>
         </div>
       </div>
     </div>
@@ -44,19 +44,21 @@
 
 <script setup>
 import PostService from "@/services/PostService";
-import {ref} from "vue";
+import {computed, onMounted, ref} from "vue";
+import {useStore} from "vuex";
 
 // let userId = ref(null)
 let posts = ref([])
 let messageDelete = ref(null)
+const store = useStore();
+const auth = computed(() => store.state.authenticated)
 
 const showAllPosts = () => {
-  PostService.getAllPosts(4)
+  PostService.getAllPosts()
       .then(response => {
         posts.value = response.data
       })
       .catch(error => {
-        posts.value = ["No posts by this user"]
         console.log(error)
       })
 }
@@ -70,7 +72,14 @@ const deletePost = (postId) => {
       .catch(error => console.log(error))
 }
 
+onMounted(() => {
   showAllPosts()
+  try {
+    store.dispatch('setAuth', true)
+  } catch (error) {
+    store.dispatch('setAuth', false)
+  }
+})
 
 </script>
 

@@ -6,7 +6,7 @@
         <router-link :to="{name: 'posts'}" class="navbar-brand">Posts</router-link>
       </div>
       <div>
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="!auth">
           <li class="nav-item">
             <router-link :to="{name: 'login'}" class="nav-link">Login</router-link>
           </li>
@@ -15,9 +15,9 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="auth">
           <li class="nav-item">
-            <a href="#" class="nav-link">Logout</a>
+            <router-link href="#" class="nav-link" @click="logout" :to="{name: 'home'}">Logout</router-link>
           </li>
         </ul>
       </div>
@@ -25,10 +25,18 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: "CustomNavbar"
-}
+<script setup>
+  import {useStore} from "vuex";
+  import {computed} from "vue";
+  import AuthService from "@/services/AuthService";
+
+  const store = useStore()
+  const auth = computed(() => store.state.authenticated)
+
+  const logout = () => {
+    AuthService.logout();
+  }
+
 </script>
 
 <style scoped>
