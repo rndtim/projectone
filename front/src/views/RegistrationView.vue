@@ -1,14 +1,14 @@
 <template>
   <div>
-    <registration-component/>
+    <registration-form/>
   </div>
 </template>
 
 <script>
-import RegistrationComponent from "@/components/RegistrationComponent";
+import RegistrationForm from "@/components/RegistrationForm";
 
 export default {
-  components: {RegistrationComponent}
+  components: {RegistrationForm}
 }
 </script>
 

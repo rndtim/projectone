@@ -9,8 +9,8 @@ class PostService {
         return http.get(`/posts/${postId}`)
     }
 
-    createPost(userId, data) {
-        return http.post(`/posts?userId=${userId}`, data)
+    createPost(data) {
+        return http.post(`/posts`, data)
     }
 
     editPost(postId, data) {
