@@ -31,7 +31,7 @@ const createPost = () => {
     title: title.value,
     description: description.value
   }
-  PostService.createPost(4, data)
+  PostService.createPost(data)
       .then(() => postCreated.value = 'Post was created')
       .catch(error => console.log(error))
 
