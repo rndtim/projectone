@@ -8,7 +8,7 @@ class AuthService {
         return http.post('/auth/login', credentials)
     }
     logout() {
-        localStorage.removeItem('jwt');
+        localStorage.removeItem('user');
     }
 }
 

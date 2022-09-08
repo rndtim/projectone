@@ -21,7 +21,7 @@
               <div>
                 {{ post.description }}
               </div>
-              <div v-if="!auth">
+              <div v-if="auth">
                 <router-link :to="'/posts/' + post.id" class="btn btn-outline-warning me-3">Edit</router-link>
                 <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
               </div>

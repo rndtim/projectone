@@ -1,8 +1,8 @@
 export default function authHeader() {
-    let jwt = localStorage.getItem('jwt')
-    if (jwt) {
-        return {Authorization: 'Bearer ' + jwt};
+    let user = localStorage.getItem('user')
+    if (user && user.token) {
+        return {Authorization: 'Bearer ' + user.token};
     } else {
-        return {};
+        localStorage.removeItem('user');
     }
 }

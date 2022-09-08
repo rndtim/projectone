@@ -28,10 +28,9 @@ let credentials = ref({
 
 const login = () => {
   console.log('login')
-  console.log(credentials.value)
   AuthService.login(credentials.value)
       .then(response => {
-        localStorage.setItem('jwt', response.data.token)
+        localStorage.setItem('user', JSON.stringify(response.data))
       })
       .catch(error => console.error(error))
 

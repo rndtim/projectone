@@ -7,10 +7,10 @@ export default createStore({
   getters: {
   },
   mutations: {
-    SET_AUTH: (state, auth) => state.authenticated = auth
+    change_auth: (state, auth) => state.authenticated = auth
   },
   actions: {
-    setAuth: ({commit}, auth) => commit('SET_AUTH', auth)
+    setAuth: ({commit}, auth) => commit('change_auth', auth)
   },
   modules: {
   }
