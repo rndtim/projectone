@@ -16,6 +16,7 @@ public class Post {
   private String description;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+  private Long userId;
 
   // This method can be realized in Factory(@Component) directory
   // as a public method (entity) with Builder return DTO
@@ -26,6 +27,7 @@ public class Post {
     post.setDescription(postEntity.getDescription());
     post.setCreatedAt(postEntity.getCreatedAt());
     post.setUpdatedAt(postEntity.getUpdatedAt());
+    post.setUserId(postEntity.getAuthor().getId());
     return post;
   }
 }
