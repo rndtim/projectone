@@ -1,11 +1,13 @@
 package com.projectone.api.controllers;
 
+import com.projectone.api.dto.JWTResponse;
 import com.projectone.api.dto.LoginCredentials;
 import com.projectone.api.dto.User;
 import com.projectone.api.services.UserService;
 import com.projectone.security.JWTUtil;
 import com.projectone.store.entities.UserEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -27,14 +31,14 @@ public class AuthenticationController {
   private AuthenticationManager authManager;
 
   @PostMapping("/registration")
-  public Map<String, Object> registerHandler(@RequestBody UserEntity user){
+  public ResponseEntity<JWTResponse> registerHandler(@RequestBody UserEntity user){
     userService.save(user);
     String token = jwtUtil.generateToken(User.convertEntityToModel(user));
-    return Collections.singletonMap("token", token);
+    return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getRoles()));
   }
 
   @PostMapping("/login")
-  public Map<String, Object> loginHandler(@RequestBody LoginCredentials body){
+  public ResponseEntity<JWTResponse> loginHandler(@RequestBody LoginCredentials body){
     try {
       UsernamePasswordAuthenticationToken authInputToken =
               new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
@@ -43,7 +47,7 @@ public class AuthenticationController {
       User user = userService.getByUsername(body.getUsername());
       String token = jwtUtil.generateToken(user);
 
-      return Collections.singletonMap("token", token);
+      return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getRoles()));
 
     }catch (AuthenticationException authExc){
       throw new RuntimeException("Invalid Login Credentials");

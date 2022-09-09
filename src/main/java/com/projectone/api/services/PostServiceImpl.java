@@ -1,6 +1,7 @@
 package com.projectone.api.services;
 
 import com.projectone.api.dto.Post;
+import com.projectone.api.exceptions.NotAllowed;
 import com.projectone.store.entities.PostEntity;
 import com.projectone.store.entities.UserEntity;
 import com.projectone.store.repositories.PostRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +41,11 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Post updatePost(Long postId, PostEntity postEntity) {
+    String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    UserEntity userEntity = userRepository.findByUsername(username);
+    if (!Objects.equals(postEntity.getAuthor().getId(), userEntity.getId())) {
+      throw new NotAllowed("Not allowed to change the post");
+    }
     PostEntity newPost = postRepository.findPostById(postId);
     newPost.setTitle(postEntity.getTitle());
     newPost.setDescription(postEntity.getDescription());
@@ -48,6 +55,12 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void deletePostById(Long postId) {
+    String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    UserEntity userEntity = userRepository.findByUsername(username);
+    PostEntity postEntity = postRepository.findPostById(postId);
+    if (!Objects.equals(postEntity.getAuthor().getId(), userEntity.getId())) {
+      throw new NotAllowed("Not allowed to delete the post");
+    }
     postRepository.deleteById(postId);
   }
 }

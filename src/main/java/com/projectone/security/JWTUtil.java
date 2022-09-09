@@ -31,7 +31,7 @@ public class JWTUtil {
             .withSubject(user.getUsername())
             .withExpiresAt(new Date(System.currentTimeMillis() + expirationMs))
             .withIssuer("ProjectOne")
-            .withClaim("email", user.getEmail())
+            .withClaim("roles", user.getEmail())
             .sign(Algorithm.HMAC256(secret));
   }
 

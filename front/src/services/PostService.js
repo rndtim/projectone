@@ -3,7 +3,7 @@ import authHeader from '../auth-header'
 
 class PostService {
     getAllPosts() {
-        return http.get(`/posts`, {headers: authHeader()});
+        return http.get(`/posts`);
     }
 
     getOnePost(postId) {
