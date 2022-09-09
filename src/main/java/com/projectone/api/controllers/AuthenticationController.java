@@ -34,7 +34,7 @@ public class AuthenticationController {
   public ResponseEntity<JWTResponse> registerHandler(@RequestBody UserEntity user){
     userService.save(user);
     String token = jwtUtil.generateToken(User.convertEntityToModel(user));
-    return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getEmail()));
+    return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getRoles()));
   }
 
   @PostMapping("/login")
@@ -47,7 +47,7 @@ public class AuthenticationController {
       User user = userService.getByUsername(body.getUsername());
       String token = jwtUtil.generateToken(user);
 
-      return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getEmail()));
+      return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getRoles()));
 
     }catch (AuthenticationException authExc){
       throw new RuntimeException("Invalid Login Credentials");
