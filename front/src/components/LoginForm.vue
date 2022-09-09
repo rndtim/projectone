@@ -18,23 +18,24 @@
 
 import {ref} from "vue";
 import {useRouter} from "vue-router";
-import AuthService from "@/services/AuthService";
-
+import {useStore} from "vuex";
 const router = useRouter();
+const store = useStore();
+
 let credentials = ref({
   username: '',
   password: ''
 })
 
 const login = () => {
-  console.log('login')
-  AuthService.login(credentials.value)
-      .then(response => {
-        localStorage.setItem('user', JSON.stringify(response.data))
-      })
-      .catch(error => console.error(error))
-
-  router.push({name: 'posts'})
+  console.log()
+  store.dispatch("auth/login", credentials.value)
+      .then(() => {
+            console.log('login')
+            router.push({name: 'posts'})
+          }
+      )
+      .catch((error) => console.log(error))
 }
 </script>
 

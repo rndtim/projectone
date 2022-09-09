@@ -2,41 +2,42 @@
   <section>
     <div class="container mx-auto">
       <div class="row">
-        <h4>Posts List</h4>
+        <h1>List of cocktails</h1>
         <div class="col-lg-6">
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-success" type="submit">Search</button>
           </form>
-        </div>
-        <div class="row">
-          <ul class="list-group mt-3" v-if="posts != null">
-            <li class="list-group-item d-flex justify-content-between align-items-center"
-                v-for="post in posts.sort((a,b) => a.id - b.id)"
-                :key="post.id"
-            >
-              <div>
-                {{ post.title }}
-              </div>
-              <div>
-                {{ post.description }}
-              </div>
-              <div v-if="auth">
-                <router-link :to="'/posts/' + post.id" class="btn btn-outline-warning me-3">Edit</router-link>
-                <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
-              </div>
-            </li>
-          </ul>
-<!--          <div class="mt-3 col-lg-4" v-else>-->
-<!--            <p>No posts</p>-->
-<!--          </div>-->
+          <div>
+            <router-link :to="{name:'add-post'}" class="btn btn-primary mt-2" v-if="auth">Add new post
+            </router-link>
+          </div>
           <div class="mt-3 col-lg-4" v-if="messageDelete != null">
             <p>{{ messageDelete }}</p>
           </div>
         </div>
-        <div>
-          <router-link :to="{name:'add-post'}" class="btn btn-outline-primary mt-2" v-if="auth">Add new post</router-link>
+        <div class="row mt-3" v-if="posts != null">
+          <div class="col col-lg-4 mt-3" v-for="post in posts.sort((a,b) => a.id - b.id)"
+               :key="post.id">
+            <div class="card shadow-sm">
+              <img src="../assets/img/card_image.jpg" class="card-img-top" alt="cocktail">
+
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.description }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-inline-grid" v-if="auth && store.state.auth.user.id === post.author.id">
+                    <router-link :to="'/posts/' + post.id" class="btn btn-warning me-2">Edit</router-link>
+                    <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
+                  </div>
+                  <medium class="text-muted"> {{ post.author.username }}</medium>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <p v-else>No posts</p>
+
       </div>
     </div>
   </section>
@@ -51,11 +52,12 @@ import {useStore} from "vuex";
 let posts = ref([])
 let messageDelete = ref(null)
 const store = useStore();
-const auth = computed(() => store.state.authenticated)
+const auth = computed(() => store.state.auth.status.loggedIn)
 
 const showAllPosts = () => {
   PostService.getAllPosts()
       .then(response => {
+        // console.log(response.data)
         posts.value = response.data
       })
       .catch(error => {
@@ -72,17 +74,16 @@ const deletePost = (postId) => {
       .catch(error => console.log(error))
 }
 
+showAllPosts()
+
 onMounted(() => {
-  showAllPosts()
-  try {
-    store.dispatch('setAuth', true)
-  } catch (error) {
-    store.dispatch('setAuth', false)
-  }
+
 })
 
 </script>
 
 <style scoped>
-
+h1{
+  color: #fff;
+}
 </style>

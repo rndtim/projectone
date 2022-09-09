@@ -1,15 +1,15 @@
 <template>
   <div class="container mx-auto">
     <div class="row">
-      <h1>Edit Post</h1>
+      <h2>Edit Post</h2>
       <div class="col-lg-6">
         <label for="inputTitle" class="form-label">Title</label>
         <input id="inputTitle" class="form-control" type="text" size="30" placeholder="Title" v-model="post.title">
         <label for="inputDescription" class="form-label">Description</label>
-        <textarea class="form-control" id="inputDescription" rows="3" placeholder="Description"
+        <textarea class="form-control" id="inputDescription" rows="10" placeholder="Description"
                   v-model="post.description"></textarea>
-        <button class="btn btn-outline-success mt-2 me-2" @click="editPost">Save</button>
-        <router-link to="/posts" class="btn btn-outline-primary mt-2">Back</router-link>
+        <button class="btn btn-success mt-2 me-2" @click="editPost">Save</button>
+        <router-link to="/posts" class="btn btn-primary mt-2">Back</router-link>
         <p class="mt-3" v-if="message != null"> {{ message }}</p>
         <div>
         </div>
@@ -35,6 +35,7 @@ const getOnePost = () => {
 }
 
 const editPost = () => {
+  // console.log(post.value)
   PostService.editPost(post.value.id, post.value)
       .then(() => message.value = 'Post was updated')
       .catch(error => console.log(error))
@@ -47,5 +48,7 @@ getOnePost()
 </script>
 
 <style scoped>
-
+h2{
+  color: #fff;
+}
 </style>

@@ -19,8 +19,9 @@
 <script setup>
 
 import {ref} from "vue";
-import AuthService from "@/services/AuthService";
 import {useRouter} from "vue-router";
+import {useStore} from "vuex";
+const store = useStore();
 
 let data = ref({
   username: '',
@@ -32,16 +33,9 @@ const router = useRouter();
 
 const registration = () => {
   console.log('registration')
-  // console.log(data.value)
-  AuthService.registration(data.value)
-      .then(response => console.log(response.data))
-      .catch(error => console.error(error))
-
-  // data.value.username = ''
-  // data.value.email = ''
-  // data.value.password = ''
-
-  router.push({name: 'login'})
+  store.dispatch("auth/registration", data.value)
+      .then(() => router.push({name: 'login'}))
+      .catch((error) => console.log(error))
 }
 </script>
 
