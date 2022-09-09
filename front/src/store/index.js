@@ -1,17 +1,8 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
+import { auth } from "./auth.module";
 
 export default createStore({
-  state: {
-    authenticated: false
-  },
-  getters: {
-  },
-  mutations: {
-    change_auth: (state, auth) => state.authenticated = auth
-  },
-  actions: {
-    setAuth: ({commit}, auth) => commit('change_auth', auth)
-  },
   modules: {
-  }
-})
+    auth,
+  },
+});
