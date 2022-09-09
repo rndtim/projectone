@@ -6,9 +6,8 @@ import com.projectone.store.entities.PostEntity;
 import java.util.List;
 
 public interface PostService {
-  List<Post> getAllPostByUser(Long userId);
+  List<Post> getAllPosts();
   Post save(PostEntity postEntity);
-  Post getPostByUsername(String username, Long postId);
   Post getPostById(Long postId);
   Post updatePost(Long postId, PostEntity postEntity);
   void deletePostById(Long postId);

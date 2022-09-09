@@ -32,14 +32,14 @@ const router = useRouter();
 
 const registration = () => {
   console.log('registration')
-  console.log(data.value)
+  // console.log(data.value)
   AuthService.registration(data.value)
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
 
-  data.value.username = ''
-  data.value.email = ''
-  data.value.password = ''
+  // data.value.username = ''
+  // data.value.email = ''
+  // data.value.password = ''
 
   router.push({name: 'login'})
 }

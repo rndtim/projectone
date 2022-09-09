@@ -1,24 +1,25 @@
 import http from "../http-common";
+import authHeader from '../auth-header'
 
 class PostService {
-    getAllPosts(userId) {
-        return http.get(`/posts?userId=${userId}`);
+    getAllPosts() {
+        return http.get(`/posts`, {headers: authHeader()});
     }
 
     getOnePost(postId) {
-        return http.get(`/posts/${postId}`)
+        return http.get(`/posts/${postId}`, {headers: authHeader()})
     }
 
     createPost(data) {
-        return http.post(`/posts`, data)
+        return http.post(`/posts`, data, {headers: authHeader()})
     }
 
     editPost(postId, data) {
-        return http.put(`/posts/${postId}`, data)
+        return http.put(`/posts/${postId}`, data, {headers: authHeader()})
     }
 
     deletePost(postId) {
-        return http.delete(`/posts/${postId}`)
+        return http.delete(`/posts/${postId}`, {headers: authHeader()})
     }
 }
 

@@ -20,24 +20,8 @@ public class PostServiceImpl implements PostService {
   private final UserRepository userRepository;
 
   @Override
-  public List<Post> getAllPostByUser(Long userId) {
-    UserEntity userEntity = userRepository.getReferenceById(userId);
-    return userEntity.getUserPosts().stream().map(Post::convertEntityToModel).collect(Collectors.toList());
-  }
-
-  private static Post getPostFromUser(Long postId, UserEntity userEntity) {
-    return userEntity.getUserPosts().stream()
-            .filter(post -> postId.equals(post.getId()))
-            .findFirst()
-            .map(Post::convertEntityToModel)
-            .get();
-  }
-
-  @Override
-  public Post getPostByUsername(String username, Long postId) {
-    UserEntity userEntity = userRepository.findByUsername(username);
-    return getPostFromUser(postId, userEntity);
-//    return Post.convertEntityToModel(postRepository.findPostById(postId));
+  public List<Post> getAllPosts() {
+    return postRepository.findAll().stream().map(Post::convertEntityToModel).collect(Collectors.toList());
   }
 
   @Override
