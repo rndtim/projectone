@@ -10,16 +10,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/auth")
@@ -33,17 +30,18 @@ public class AuthenticationController {
   @PostMapping("/registration")
   public ResponseEntity<JWTResponse> registerHandler(@RequestBody UserEntity user){
     userService.save(user);
-    String token = jwtUtil.generateToken(User.convertEntityToModel(user));
+    String token = jwtUtil.generateToken(User.convertEntityToDTO(user));
     return ResponseEntity.ok(new JWTResponse(token, user.getId(), user.getUsername(), user.getRoles()));
   }
 
   @PostMapping("/login")
   public ResponseEntity<JWTResponse> loginHandler(@RequestBody LoginCredentials body){
     try {
-      UsernamePasswordAuthenticationToken authInputToken =
-              new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
+      Authentication authentication =
+              authManager.authenticate(new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword()));
 
-      authManager.authenticate(authInputToken);
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+
       User user = userService.getByUsername(body.getUsername());
       String token = jwtUtil.generateToken(user);
 

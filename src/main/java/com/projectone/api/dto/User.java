@@ -16,12 +16,12 @@ public class User {
   private List<Post> posts;
   private Set<Roles> roles;
 
-  public static User convertEntityToModel(UserEntity userEntity) {
+  public static User convertEntityToDTO(UserEntity userEntity) {
     User user = new User();
     user.setId(userEntity.getId());
     user.setUsername(userEntity.getUsername());
     user.setEmail(userEntity.getEmail());
-    user.setPosts(userEntity.getUserPosts().stream().map(Post::convertEntityToModel).collect(Collectors.toList()));
+    user.setPosts(userEntity.getUserPosts().stream().map(Post::convertEntityToDTO).collect(Collectors.toList()));
     user.setRoles(userEntity.getRoles());
     return user;
   }

@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
 
   public List<User> getAllUsers() {
-    return userRepository.findAll().stream().map(User::convertEntityToModel).collect(Collectors.toList());
+    return userRepository.findAll().stream().map(User::convertEntityToDTO).collect(Collectors.toList());
   }
 
   public void save(UserEntity userEntity) {
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
   public User getByUsername(String username) {
     try {
       if (userRepository.findByUsername(username) == null) throw new NoSuchUser("No user with this username");
-      return User.convertEntityToModel(userRepository.findByUsername(username));
+      return User.convertEntityToDTO(userRepository.findByUsername(username));
     } catch (NoSuchUser e) {
       throw new RuntimeException(e);
     }

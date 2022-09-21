@@ -3,9 +3,12 @@ package com.projectone.api.controllers;
 import com.projectone.api.dto.Post;
 import com.projectone.api.services.PostService;
 import com.projectone.store.entities.PostEntity;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,10 +32,10 @@ public class PostController {
     return postService.getPostById(postId);
   }
 
-  @PostMapping("/posts")
+  @PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  public Post createPost(@RequestBody PostEntity postEntity) {
-    return postService.save(postEntity);
+  public Post createPost(@RequestPart("post") PostEntity postEntity, @RequestPart("image") MultipartFile image) throws IOException {
+    return postService.save(postEntity, image);
   }
 
   @PutMapping("/posts/{postId}")
