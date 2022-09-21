@@ -8,9 +8,11 @@
         <label for="inputDescription" class="form-label">Description</label>
         <textarea class="form-control" id="inputDescription" rows="10" placeholder="Description"
                   v-model="post.description"></textarea>
+        <label for="inputImage" class="form-label">Image</label>
+        <input id="inputImage" class="form-control" type="file" @change="addImage">
         <button class="btn btn-success mt-2 me-2" @click="editPost">Save</button>
         <router-link to="/posts" class="btn btn-primary mt-2">Back</router-link>
-        <p class="mt-3" v-if="message != null"> {{ message }}</p>
+        <h4 class="mt-3" v-if="message != null"> {{ message }}</h4>
         <div>
         </div>
       </div>
@@ -35,7 +37,6 @@ const getOnePost = () => {
 }
 
 const editPost = () => {
-  // console.log(post.value)
   PostService.editPost(post.value.id, post.value)
       .then(() => message.value = 'Post was updated')
       .catch(error => console.log(error))
@@ -48,7 +49,5 @@ getOnePost()
 </script>
 
 <style scoped>
-h2{
-  color: #fff;
-}
+
 </style>

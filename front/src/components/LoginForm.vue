@@ -28,7 +28,7 @@ let credentials = ref({
 })
 
 const login = () => {
-  console.log()
+  // console.log(credentials.value)
   store.dispatch("auth/login", credentials.value)
       .then(() => {
             console.log('login')
@@ -45,10 +45,6 @@ const login = () => {
   max-width: 330px;
   padding: 15px;
   margin: auto;
-}
-
-.form-signin .checkbox {
-  font-weight: 400;
 }
 
 .form-signin .form-control {

@@ -7,8 +7,13 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment:fixed;
+    color: #fff;
 }
 
 a {
     text-decoration: none;
+}
+
+p {
+    color: #000;
 }
