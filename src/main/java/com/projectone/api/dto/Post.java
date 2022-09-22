@@ -17,10 +17,11 @@ public class Post {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private Author author;
+  private String image;
 
   // This method can be realized in Factory(@Component) directory
   // as a public method (entity) with Builder return DTO
-  public static Post convertEntityToModel(PostEntity postEntity) {
+  public static Post convertEntityToDTO(PostEntity postEntity) {
     Post post = new Post();
     post.setId(postEntity.getId());
     post.setTitle(postEntity.getTitle());
@@ -28,6 +29,7 @@ public class Post {
     post.setCreatedAt(postEntity.getCreatedAt());
     post.setUpdatedAt(postEntity.getUpdatedAt());
     post.setAuthor(Author.convertEntityToModel(postEntity.getAuthor()));
+    post.setImage(postEntity.getPostImage().getPath());
     return post;
   }
 }

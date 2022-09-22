@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
-    <h1 style="color: white">Welcome!</h1>
-    <p style="color: white">Please log in</p>
+    <h1>Welcome to the cocktail recipe site!</h1>
+    <h4>If you want to add a cocktail you have to log in</h4>
   </div>
 </template>
 

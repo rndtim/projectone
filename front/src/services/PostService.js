@@ -3,7 +3,7 @@ import authHeader from '../auth-header'
 
 class PostService {
     getAllPosts() {
-        return http.get(`/posts`);
+        return http.get('/posts');
     }
 
     getOnePost(postId) {
@@ -11,7 +11,7 @@ class PostService {
     }
 
     createPost(data) {
-        return http.post(`/posts`, data, {headers: authHeader()})
+        return http.post('/posts', data, {headers: authHeader()})
     }
 
     editPost(postId, data) {

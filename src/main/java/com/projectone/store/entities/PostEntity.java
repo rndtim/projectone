@@ -19,8 +19,11 @@ public class PostEntity {
   @Column(nullable=false)
   private String title;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "text")
   private String description;
+
+  @OneToOne(cascade = CascadeType.ALL, mappedBy = "post")
+  private Image postImage;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
