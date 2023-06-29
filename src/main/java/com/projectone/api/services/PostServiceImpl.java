@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
   }
 
   private String saveImage(MultipartFile image, String username) throws IOException {
-    String folder = "IdeaProjects\\projectone\\front\\src\\assets\\post_images\\" + username;
+    String folder = "C:\\Users\\Acer\\IdeaProjects\\projectone\\front\\src\\assets\\post_images\\" + username;
     File file = new File(folder);
     if (!file.isDirectory())
       Files.createDirectory(Paths.get(folder));
