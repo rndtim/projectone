@@ -16,35 +16,35 @@
             <h3>{{ messageDelete }}</h3>
           </div>
         </div>
-        <div class="row mt-3" v-if="posts.length !== 0">
-          <div class="col col-lg-4 mt-3" v-for="post in posts.sort((a,b) => a.id - b.id)"
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-md-3 g-4 mt-3" v-if="posts.length !== 0">
+          <div class="col" v-for="post in posts.sort((a,b) => a.id - b.id)"
                :key="post.id">
-            <div class="card shadow-sm">
-<!--              <img :src="'../assets/post_images/' + post.author.username + '/' + post.image" class="card-img-top"-->
-<!--                   :alt="post.title">-->
-              <img :src="getImgUrl(post.author.username, post.image)" class="card-img-top"
+            <div class="card shadow-sm h-100">
+              <img :src="require('../assets/post_images/' + post.author.username + '/' + post.image)" class="card-img-top img-fluid"
                    :alt="post.title">
               <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.description }}</p>
+              </div>
+              <div class="card-footer">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="d-inline-grid" v-if="auth && store.state.auth.user.id === post.author.id">
-                    <router-link :to="'/posts/' + post.id" class="btn btn-warning me-2">Edit</router-link>
-                    <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
+                    <router-link :to="'/posts/' + post.id" class="btn btn-warning me-2 py-1">Edit</router-link>
+                    <button class="btn btn-danger py-1" @click="deletePost(post.id)">Delete</button>
                   </div>
                   <h5 class="text-muted"> {{ post.author.username }}</h5>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
+
         <div v-else>
           <h3>No posts</h3>
         </div>
 
-      </div>
-    </div>
+      </div> <!-- row -->
+    </div> <!-- container -->
   </section>
 </template>
 
@@ -53,7 +53,6 @@ import PostService from "@/services/PostService";
 import {computed, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 
-// let userId = ref(null)
 let posts = ref([])
 let messageDelete = ref(null)
 const store = useStore();
@@ -69,9 +68,9 @@ const showAllPosts = () => {
       })
 }
 
-const getImgUrl = (author, img) => {
-  return require('../assets/post_images/' + author + '/' + img);
-}
+// const getImgUrl = (author, img) => {
+//   return require('../assets/post_images/' + author + '/' + img);
+// }
 
 const deletePost = (postId) => {
   PostService.deletePost(postId)
@@ -90,6 +89,22 @@ onMounted(() => {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.card {
+  img {
+    min-height: 300px;
+    max-height: 300px;
+    object-fit: cover;
+  }
 
+  .card-body {
+    color: black;
+
+    .card-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
 </style>
