@@ -1,13 +1,6 @@
 package com.projectone.store.entities;
 
-import org.springframework.security.core.GrantedAuthority;
-
-public enum Roles implements GrantedAuthority {
+public enum Roles {
   ROLE_USER,
   ROLE_ADMIN;
-
-  @Override
-  public String getAuthority() {
-    return name();
-  }
 }

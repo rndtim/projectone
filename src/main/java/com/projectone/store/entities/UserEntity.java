@@ -1,22 +1,23 @@
 package com.projectone.store.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 
-@Getter
-@Setter
+@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Table(name = "users")
-public class UserEntity implements UserDetails {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
   @Column(nullable = false, unique = true)
   private String username;
@@ -24,42 +25,16 @@ public class UserEntity implements UserDetails {
   @Column(nullable = false, unique = true)
   private String email;
 
-  @Column(length = 1000, nullable = false)
-  private String password;
+//  @Column(length = 1000, nullable = false)
+//  private String password;
 
-  private boolean isActive;
+//  private boolean isActive;
 
   @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
   @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
   @Enumerated(EnumType.STRING)
-  private Set<Roles> roles = new HashSet<>();
+  private List<Roles> roles = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
   private List<PostEntity> userPosts = new ArrayList<>();
-
-  //security
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return getRoles();
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return isActive();
-  }
 }

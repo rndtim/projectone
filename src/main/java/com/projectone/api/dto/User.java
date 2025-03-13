@@ -10,15 +10,13 @@ import java.util.stream.Collectors;
 
 @Data
 public class User {
-  private Long id;
   private String username;
   private String email;
   private List<Post> posts;
-  private Set<Roles> roles;
+  private List<Roles> roles;
 
   public static User convertEntityToDTO(UserEntity userEntity) {
     User user = new User();
-    user.setId(userEntity.getId());
     user.setUsername(userEntity.getUsername());
     user.setEmail(userEntity.getEmail());
     user.setPosts(userEntity.getUserPosts().stream().map(Post::convertEntityToDTO).collect(Collectors.toList()));

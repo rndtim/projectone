@@ -6,11 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public interface PostService {
   List<Post> getAllPosts();
-  Post save(PostEntity postEntity, MultipartFile image) throws IOException;
-  Post getPostById(Long postId);
-  Post updatePost(Long postId, PostEntity postEntity);
-  void deletePostById(Long postId);
+  Post save(Post post, MultipartFile image) throws IOException;
+  Post getPostById(UUID postId);
+  Post updatePost(UUID postId, Post post);
+  void deletePostById(UUID postId);
 }
