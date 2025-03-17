@@ -2,23 +2,36 @@ package com.projectone.api.controllers;
 
 import com.projectone.api.dto.User;
 import com.projectone.api.services.UserService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/users")
-@AllArgsConstructor
 public class UserController {
 
-  private UserService userService;
+    private final UserService userService;
 
-  @GetMapping("/home")
-  public User getUserInfo() {
-    String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return userService.getByUsername(username);
-  }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/home")
+    public ResponseEntity<UUID> saveUser(@RequestBody User user) {
+        UUID userId = userService.save(user);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
+    }
+
+    @GetMapping("/home")
+    public User getUserInfo(@RequestParam String username) {
+        return userService.getByUsername(username);
+    }
+
+    @GetMapping
+    public List<User> getUsers() {
+        return userService.getAllUsers();
+    }
 }
