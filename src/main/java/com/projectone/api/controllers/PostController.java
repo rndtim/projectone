@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 public class PostController {
 
     private final PostService postService;
@@ -20,27 +20,27 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/posts")
+    @GetMapping()
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public Post getOnePostById(@PathVariable UUID postId) {
         return postService.getPostById(postId);
     }
 
-    @PostMapping(path = "/posts", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Post createPost(@RequestPart("post") Post post, @RequestPart("image") MultipartFile image) throws IOException {
         return postService.save(post, image);
     }
 
-    @PutMapping("/posts/{postId}")
+    @PutMapping("/{postId}")
     public Post updatePostById(@PathVariable UUID postId, @RequestBody Post post) {
         return postService.updatePost(postId, post);
     }
 
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/{postId}")
     public void deletePostById(@PathVariable UUID postId) {
         postService.deletePostById(postId);
     }
