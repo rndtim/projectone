@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -33,7 +32,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPosts() {
-        return postRepository.findAll().stream().map(Post::convertEntityToDTO).collect(Collectors.toList());
+        return postRepository
+                .findAll()
+                .stream()
+                .map(Post::convertEntityToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
