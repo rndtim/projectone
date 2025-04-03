@@ -9,6 +9,7 @@ import com.projectone.store.repositories.ImageRepository;
 import com.projectone.store.repositories.PostRepository;
 import com.projectone.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,9 +47,10 @@ public class PostServiceImpl implements PostService {
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .build();
-        UserEntity userEntityAsAuthor = userRepository.findByUsername(post.getAuthor().getUsername());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity userEntityAsAuthor = userRepository.findByUsername(username);
         postEntity.setAuthor(userEntityAsAuthor);
-        String path = saveImage(image, post.getAuthor().getUsername());
+        String path = saveImage(image, username);
         Image postImage = imageToModel(image, path, postEntity);
         postEntity.setPostImage(postImage);
         imageRepository.saveAndFlush(postImage);
