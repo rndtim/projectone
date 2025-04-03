@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <jjwt.version>0.12.6</jjwt.version>
+        <env.version>3.2.0</env.version>
     </properties>
     <dependencies>
         <dependency>
@@ -51,6 +52,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -69,6 +71,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--.env-->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>${env.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
