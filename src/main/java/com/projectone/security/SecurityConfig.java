@@ -38,6 +38,7 @@ public class SecurityConfig {
                     authorizeRequests
                             .requestMatchers("/api/auth/register").permitAll()
                             .requestMatchers("/api/auth/login").permitAll()
+                            .requestMatchers("/api/posts").permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(session ->
