@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
@@ -14,7 +16,7 @@ import java.util.*;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class UserEntity implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
@@ -25,8 +27,8 @@ public class UserEntity {
   @Column(nullable = false, unique = true)
   private String email;
 
-//  @Column(length = 1000, nullable = false)
-//  private String password;
+  @Column(length = 1000, nullable = false)
+  private String password;
 
 //  private boolean isActive;
 
@@ -37,4 +39,30 @@ public class UserEntity {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
   private List<PostEntity> userPosts = new ArrayList<>();
+
+  // Security
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return getRoles();
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }

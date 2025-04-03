@@ -1,14 +1,14 @@
 package com.projectone.api.services;
 
-import com.projectone.api.dto.Post;
 import com.projectone.api.dto.User;
 import com.projectone.api.exceptions.NoSuchUser;
 import com.projectone.api.exceptions.UserAlreadyExists;
-import com.projectone.store.entities.PostEntity;
 import com.projectone.store.entities.Roles;
 import com.projectone.store.entities.UserEntity;
 import com.projectone.store.repositories.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,7 +41,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = UserEntity.builder()
                 .username(user.getUsername())
                 .email(user.getEmail())
+                .password(bCryptPasswordEncoder.encode(user.getPassword()))
                 .roles(List.of(Roles.ROLE_USER))
+                .userPosts(List.of())
                 .build();
         return userRepository.save(userEntity).getId();
     }
