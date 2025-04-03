@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Data
 @Builder
 public class User {
+    private UUID id;
     private String username;
     private String email;
     private String password;
@@ -19,6 +21,7 @@ public class User {
 
     public static User convertEntityToDTO(UserEntity userEntity) {
         return User.builder()
+                .id(userEntity.getId())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
                 .password(userEntity.getPassword())

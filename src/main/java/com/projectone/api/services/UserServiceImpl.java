@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserAlreadyExists("This email is being already used");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         UserEntity userEntity = UserEntity.builder()
                 .username(user.getUsername())
