@@ -6,25 +6,26 @@ import com.projectone.api.exceptions.UserAlreadyExists;
 import com.projectone.store.entities.Roles;
 import com.projectone.store.entities.UserEntity;
 import com.projectone.store.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     public List<User> getAllUsers() {
-        return userRepository.findAll().stream().map(User::convertEntityToDTO).collect(Collectors.toList());
+        return userRepository
+                .findAll()
+                .stream()
+                .map(User::convertEntityToDTO)
+                .collect(Collectors.toList());
     }
 
     public UUID save(User user) {
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserAlreadyExists("This email is being already used");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         UserEntity userEntity = UserEntity.builder()
                 .username(user.getUsername())
